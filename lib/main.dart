@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'tabMain.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: <String,WidgetBuilder>{'tabMain':(_)=>TabMain()},
     );
   }
 }
@@ -97,6 +99,14 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.display1,
             ),
+            RaisedButton(
+              onPressed: (){
+                Navigator.of(context).pushNamed("tabMain");
+              },
+              child: new Text("第二个页面"),
+              color: Colors.blue,
+            ),
+
           ],
         ),
       ),
