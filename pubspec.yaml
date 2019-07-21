@@ -41,6 +41,11 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+#  格式一定要对其，assets前面多一个空格都会导致报错
+  assets:
+    - assets/
+    - assets/images/
+
   # To add Flutter specific assets to your application, add an assets section, 
   # like this:
   # assets:
