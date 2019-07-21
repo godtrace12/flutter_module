@@ -2,25 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'adapter/devListAdapter.dart';
 
-class InfiniteWordList extends StatelessWidget{
+class NoSeprateWordList extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return new InfiniteWordListInner();
+    return new NoSeprateWordListInner();
   }
 
 }
 
-class InfiniteWordListInner extends StatefulWidget{
+class NoSeprateWordListInner extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return new _InfiniteWordListInnerState();
+    return new _INoSeprateWordListInnerState();
   }
 
 }
 
-class _InfiniteWordListInnerState extends State<InfiniteWordListInner>{
+class _INoSeprateWordListInnerState extends State<NoSeprateWordListInner>{
   static const loadingTag ="##loading##";
   var _words = <String>[loadingTag];
 
@@ -33,10 +33,9 @@ class _InfiniteWordListInnerState extends State<InfiniteWordListInner>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return ListView.separated(
-        itemCount:_words.length,
-        itemBuilder: (context,index){
-          //表尾
+      return ListView.builder(
+          itemBuilder: (BuildContext context,int index){
+            //表尾
           if(_words[index] == loadingTag) {
             if(_words.length -1 <100){
               // 不足100，继续获取数据
@@ -57,14 +56,27 @@ class _InfiniteWordListInnerState extends State<InfiniteWordListInner>{
             }
           }
           //显示material 的列表文本项
-          return ListTile(title: Text((_words[index])));
-          //列表显示文本
-//          return Text(_words[index],style: TextStyle(fontSize: 30),);
-          // 显示设备列表适配器
-          return DevListAdapter(_words[index]);
-
-        },
-        separatorBuilder: (context, index) => Divider(height: 1.0));
+          return new Row(
+            children: <Widget>[
+              new Container(
+                child: new Image(image: new AssetImage('assets/images/pic_hzw.jpeg'),
+                width: 100.0,
+                height: 70.0,
+                fit: BoxFit.cover,),
+                margin: EdgeInsets.all(10.0),
+              ),
+              new Expanded(child: new Column(
+                children: <Widget>[
+                  new Container(
+                    height: 70.0,
+                    child: new Text('这是一张非常漂亮的图片'),
+                  )
+                ],
+              ),
+              flex: 1,)
+            ],
+          );
+          });
   }
 
   void _retrieveData(){
