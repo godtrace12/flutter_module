@@ -45,9 +45,11 @@ class _TabMainState extends State<TabMain> with SingleTickerProviderStateMixin{
             child: TabBarView(
                 controller: mController,
                 children: mainItems
-                    .map((MainItem item) =>
+                    .map((MainItem item) {
+                      return item.widget;
+                }
 //                    Container(child: Center(child: Text(item.title)))
-                    item.widget
+//                    item.widget
                 )
                     .toList()
             ),
@@ -79,10 +81,10 @@ class MainItem{
 
  List<MainItem> mainItems = <MainItem>[
   new MainItem(title: '视频',icon: Icons.directions_car,widget:new InfiniteWordList()),
-  new MainItem(title: '消息', icon: Icons.directions_bike,widget:new Container()),
-  new MainItem(title: '工单', icon: Icons.directions_boat,widget:new Container()),
-  new MainItem(title: '直播', icon: Icons.directions_bus,widget:new Container()),
-  new MainItem(title: '个人中心', icon: Icons.directions_railway,widget:new Container()),
+  new MainItem(title: '消息', icon: Icons.directions_bike,widget:new ContainerDemo()),
+  new MainItem(title: '工单', icon: Icons.directions_boat,widget:new ContainerDemo()),
+  new MainItem(title: '直播', icon: Icons.directions_bus,widget:new ContainerDemo()),
+  new MainItem(title: '个人中心', icon: Icons.directions_railway,widget:new ContainerDemo()),
 ];
 
 class MainItemWidget extends StatelessWidget {
