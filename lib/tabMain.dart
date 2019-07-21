@@ -70,11 +70,11 @@ class MainItem{
 }
 
 const List<MainItem> mainItems = const <MainItem>[
-  const MainItem(title: 'Video',icon: Icons.directions_car),
-  const MainItem(title: 'BICYCLE', icon: Icons.directions_bike),
-  const MainItem(title: 'BOAT', icon: Icons.directions_boat),
-  const MainItem(title: 'BUS', icon: Icons.directions_bus),
-  const MainItem(title: 'TRAIN', icon: Icons.directions_railway),
+  const MainItem(title: '视频',icon: Icons.directions_car),
+  const MainItem(title: '消息', icon: Icons.directions_bike),
+  const MainItem(title: '工单', icon: Icons.directions_boat),
+  const MainItem(title: '直播', icon: Icons.directions_bus),
+  const MainItem(title: '个人中心', icon: Icons.directions_railway),
 ];
 
 class MainItemWidget extends StatelessWidget {
