@@ -57,7 +57,7 @@ class _InfiniteWordListInnerState extends State<InfiniteWordListInner>{
             }
           }
           //显示material 的列表文本项
-          return ListTile(title: Text((_words[index])));
+//          return ListTile(title: Text((_words[index])));
           //列表显示文本
 //          return Text(_words[index],style: TextStyle(fontSize: 30),);
           // 显示设备列表适配器

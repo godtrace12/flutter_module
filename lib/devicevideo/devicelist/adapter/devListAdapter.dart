@@ -7,13 +7,14 @@ class DevListAdapter extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Container(
+    return new Container(
       width: 200.0,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          TitleArea(_camName),
-          DevCoverArea()
+//          new Text(_camName),
+          new TitleArea(_camName),
+          new DevCoverArea()
         ],
       ),
     );
@@ -30,15 +31,15 @@ class TitleArea extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Row(
+    return new Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Text(_canName),
-        Expanded(
+        new Text(_canName),
+        new Expanded(
           flex: 1,
-          child: null,
+          child: new Text(""),
         ),
-        Icon(Icons.more_horiz)
+        new Icon(Icons.more_horiz)
       ],
     );
   }
@@ -48,19 +49,20 @@ class DevCoverArea extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Stack(
-      alignment: AlignmentDirectional.topStart,
-      children: <Widget>[
-        ConstrainedBox(
-          constraints: BoxConstraints.expand(),
-          child: Image(image: new AssetImage('assets/images/pic_hzw.jpeg'),
-            width: 600.0,height: 240.0,)
-        ),
-        Positioned(
-            child: Icon(Icons.accessibility)
-        )
-      ],
-    );
+//    return new Stack(
+//      alignment: AlignmentDirectional.topStart,
+//      children: <Widget>[
+//        new ConstrainedBox(
+//          constraints: BoxConstraints.expand(),
+//          child: new Image(image: new AssetImage('assets/images/pic_hzw.jpeg'),
+//            width: 600.0,height: 240.0,)
+//        ),
+//        new Positioned(
+//            child: new Icon(Icons.accessibility)
+//        )
+//      ],
+//    );
+  return new Image(image: new AssetImage('assets/images/pic_hzw.jpeg'),width: 400.0,height: 150.0,);
   }
 
 }
