@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'devicevideo/devicelist/infiniteWordList.dart';
+import 'devicevideo/devicelist/container.dart';
+
 class TabMain extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -44,8 +46,12 @@ class _TabMainState extends State<TabMain> with SingleTickerProviderStateMixin{
                 controller: mController,
                 children: mainItems
                     .map((MainItem item) =>
-                    Container(child: Center(child: Text(item.title),),))
-                    .toList()),),
+//                    Container(child: Center(child: Text(item.title)))
+                    item.widget
+                )
+                    .toList()
+            ),
+          ),
           TabBar(
             controller: mController,
             labelColor: Colors.red,
@@ -66,16 +72,17 @@ class _TabMainState extends State<TabMain> with SingleTickerProviderStateMixin{
 class MainItem{
   final String title;
   final IconData icon;
+  final Widget widget;
 
-  const MainItem({this.title, this.icon});
+  const MainItem({this.title, this.icon,this.widget});
 }
 
-const List<MainItem> mainItems = const <MainItem>[
-  const MainItem(title: '视频',icon: Icons.directions_car),
-  const MainItem(title: '消息', icon: Icons.directions_bike),
-  const MainItem(title: '工单', icon: Icons.directions_boat),
-  const MainItem(title: '直播', icon: Icons.directions_bus),
-  const MainItem(title: '个人中心', icon: Icons.directions_railway),
+ List<MainItem> mainItems = <MainItem>[
+  new MainItem(title: '视频',icon: Icons.directions_car,widget:new InfiniteWordList()),
+  new MainItem(title: '消息', icon: Icons.directions_bike,widget:new Container()),
+  new MainItem(title: '工单', icon: Icons.directions_boat,widget:new Container()),
+  new MainItem(title: '直播', icon: Icons.directions_bus,widget:new Container()),
+  new MainItem(title: '个人中心', icon: Icons.directions_railway,widget:new Container()),
 ];
 
 class MainItemWidget extends StatelessWidget {
