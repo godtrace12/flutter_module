@@ -70,7 +70,7 @@ class _InfiniteWordListInnerState extends State<InfiniteWordListInner>{
   void _retrieveData(){
     Future.delayed(Duration(seconds: 2)).then((e){
       //每次生成20单词，单词插入到最后一个单词到前面
-      _words.insertAll(_words.length-1, generateWordPairs().take(20).map((e)=>e.asPascalCase).toList());
+      _words.insertAll(_words.length-1, generateWordPairs().take(5).map((e)=>e.asPascalCase).toList());
 
       setState(() {
 

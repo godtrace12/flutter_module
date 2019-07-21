@@ -8,6 +8,7 @@ class DevListAdapter extends StatelessWidget{
   Widget build(BuildContext context) {
     // TODO: implement build
     return new Container(
+      padding: EdgeInsets.all(20),
       width: 200.0,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -62,7 +63,24 @@ class DevCoverArea extends StatelessWidget{
 //        )
 //      ],
 //    );
-  return new Image(image: new AssetImage('assets/images/pic_hzw.jpeg'),width: 400.0,height: 150.0,);
+//  return new Image(image: new AssetImage('assets/images/pic_hzw.jpeg'),width: 400.0,height: 150.0,);
+  return new ConstrainedBox(
+      constraints: BoxConstraints(
+        minWidth: double.infinity,
+        minHeight: 150.0
+      ),
+    child: new Stack(
+      alignment: AlignmentDirectional.topEnd,
+      fit: StackFit.loose,
+      textDirection: TextDirection.ltr,
+      children: <Widget>[
+        new Image(image: new AssetImage('assets/images/pic_hzw.jpeg'),),
+        new Positioned(top: 16.0,right:6.0,child: new Icon(Icons.accessibility))
+//        new Icon(Icons.accessibility)
+      ],
+    ),);
+  
+  
   }
 
 }
