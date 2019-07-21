@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'tabMain.dart';
+import 'devicevideo/devicelist/infiniteWordList.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
-      routes: <String,WidgetBuilder>{'tabMain':(_)=>TabMain()},
+      routes: <String,WidgetBuilder>{'tabMain':(_)=>TabMain(),
+      "infiniteWordList":((_)=>InfiniteWordList())},
     );
   }
 }
@@ -88,6 +90,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.of(context).pushNamed("tabMain");
               },
               child: new Text("第二个页面"),
+              color: Colors.blue,
+            ),
+            RaisedButton(
+              onPressed: (){
+                Navigator.of(context).pushNamed("infiniteWordList");
+              },
+              child: new Text("无限上拉列表"),
               color: Colors.blue,
             ),
 
