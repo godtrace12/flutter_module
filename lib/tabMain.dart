@@ -5,9 +5,24 @@ import 'devicevideo/devicelist/noSeparateWordList.dart';
 import 'devicevideo/devicelist/refreshWordList.dart';
 
 class TabMain extends StatefulWidget{
-  @override
+
+ List<Widget> tabViews = new List();
+ Widget tab1 = new InfiniteWordList();
+ Widget tab2 = new RefreshWordList();
+ Widget tab3 = new ContainerDemo();
+ Widget tab4 = new ContainerDemo();
+ Widget tab5 = new ContainerDemo();
+
+ @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
+    print("dj tabMain createState");
+    tabViews.clear();
+    tabViews.add(tab1);
+    tabViews.add(tab2);
+    tabViews.add(tab3);
+    tabViews.add(tab4);
+    tabViews.add(tab5);
     return new _TabMainState();
   }
 //  @override
@@ -25,17 +40,22 @@ class TabMain extends StatefulWidget{
 //  }
 }
 
-class _TabMainState extends State<TabMain> with SingleTickerProviderStateMixin{
+//AutomaticKeepAliveClientMixin 接口  wantKeepAlive 方法返回true，解决tab页面切换后重绘问题，目前好像没起作用
+class _TabMainState extends State<TabMain> with SingleTickerProviderStateMixin,AutomaticKeepAliveClientMixin{
   TabController mController;
-
+  List<Widget> _tabViews;
   @override
   void initState(){
     super.initState();
+    print("dj TabMainState initState");
+     _tabViews = this.widget.tabViews;
+
     mController = TabController(length: mainItems.length, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     // TODO: implement build
     return new Scaffold(
       appBar: new AppBar(title: new Text("tab test")),
@@ -46,14 +66,12 @@ class _TabMainState extends State<TabMain> with SingleTickerProviderStateMixin{
             flex: 1,
             child: TabBarView(
                 controller: mController,
-                children: mainItems
-                    .map((MainItem item) {
-                      return item.widget;
-                }
-//                    Container(child: Center(child: Text(item.title)))
-//                    item.widget
-                )
-                    .toList()
+//                children: mainItems
+//                    .map((MainItem item) {
+//                      return item.widget;
+//                }).toList()
+//           法2 ，从已初始化的列表中拿
+            children:_tabViews
             ),
           ),
           TabBar(
@@ -71,6 +89,10 @@ class _TabMainState extends State<TabMain> with SingleTickerProviderStateMixin{
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
 
 class MainItem{
