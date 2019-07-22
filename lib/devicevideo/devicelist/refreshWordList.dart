@@ -2,46 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'adapter/devListAdapter.dart';
 
-class InfiniteWordList extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    print("dj infinite wrapper build");
-    // TODO: implement build
-    return new InfiniteWordListInner();
-  }
-
-}
-
-class InfiniteWordListInner extends StatefulWidget{
+class RefreshWordList extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
+    print("dj refresh create");
     // TODO: implement createState
-    print("dj infinite inner createState");
-    return new _InfiniteWordListInnerState();
+    return new RefreshwordListState();
   }
 
 }
 
-class _InfiniteWordListInnerState extends State<InfiniteWordListInner>{
+
+class RefreshwordListState extends State<RefreshWordList>{
   static const loadingTag ="##loading##";
   var _words = <String>[loadingTag];
 
   @override
   void initState(){
     super.initState();
-    print("dj infinite inner initState");
+    print("dj refresh initState");
     _retrieveData();
   }
   
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return ListView.separated(
-        itemCount:_words.length,
-        itemBuilder: (context,index){
-          //表尾
+  // 下拉刷新样式
+    return new RefreshIndicator(
+        child: new ListView.builder(itemBuilder: (context,index){
+//          //表尾
           if(_words[index] == loadingTag) {
-            if(_words.length -1 <100){
+            if(_words.length -1 <15){
               // 不足100，继续获取数据
               _retrieveData();
               //加载显示loading
@@ -59,16 +49,13 @@ class _InfiniteWordListInnerState extends State<InfiniteWordListInner>{
               child: Text("没有更多了",style: TextStyle(color: Colors.grey),),);
             }
           }
-          //显示material 的列表文本项
-//          return ListTile(title: Text((_words[index])));
-          //列表显示文本
-//          return Text(_words[index],style: TextStyle(fontSize: 30),);
           // 显示设备列表适配器
           return DevListAdapter(_words[index]);
-
         },
-        separatorBuilder: (context, index) => Divider(height: 1.0));
+        itemCount: _words.length),
+        onRefresh: _onRrefresh);
   }
+
 
   void _retrieveData(){
     Future.delayed(Duration(seconds: 2)).then((e){
@@ -81,6 +68,19 @@ class _InfiniteWordListInnerState extends State<InfiniteWordListInner>{
     });
 
   }
+
+  Future<Null> _onRrefresh() async{
+    await Future.delayed(Duration(seconds: 2),(){
+      _words.clear();
+      _words.add("##loading##");
+      _words.insertAll(_words.length-1, generateWordPairs().take(5).map((e)=>e.asPascalCase).toList());
+      setState(() {
+
+      });
+    });
+  }
+
+
 
 }
 

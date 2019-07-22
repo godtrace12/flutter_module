@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 
 class ContainerDemo extends StatelessWidget {
   @override
+  void initState(){
+    print("container in tab do initState");
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print("container in tab do build");
     return Container(
       decoration: BoxDecoration(
         color: Colors.black26,
