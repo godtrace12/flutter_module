@@ -13,16 +13,25 @@ class TabMain extends StatefulWidget{
  Widget tab4 = new ContainerDemo();
  Widget tab5 = new ContainerDemo();
 
+ TabMain(){
+   tabViews.clear();
+   tabViews.add(tab1);
+   tabViews.add(tab2);
+   tabViews.add(tab3);
+   tabViews.add(tab4);
+   tabViews.add(tab5);
+ }
+
  @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     print("dj tabMain createState");
-    tabViews.clear();
-    tabViews.add(tab1);
-    tabViews.add(tab2);
-    tabViews.add(tab3);
-    tabViews.add(tab4);
-    tabViews.add(tab5);
+//    tabViews.clear();
+//    tabViews.add(tab1);
+//    tabViews.add(tab2);
+//    tabViews.add(tab3);
+//    tabViews.add(tab4);
+//    tabViews.add(tab5);
     return new _TabMainState();
   }
 //  @override
@@ -51,6 +60,12 @@ class _TabMainState extends State<TabMain> with SingleTickerProviderStateMixin,A
      _tabViews = this.widget.tabViews;
 
     mController = TabController(length: mainItems.length, vsync: this);
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+    mController.dispose();
   }
 
   @override
