@@ -3,6 +3,7 @@ import 'devicevideo/devicelist/infiniteWordList.dart';
 import 'devicevideo/devicelist/container.dart';
 import 'devicevideo/devicelist/noSeparateWordList.dart';
 import 'devicevideo/devicelist/refreshWordList.dart';
+import 'devicevideo/devicelist/refreshScrollWordList.dart';
 
 class BottomNavMain extends StatefulWidget{
   @override
@@ -26,7 +27,7 @@ class _BottomNavMainState extends State<BottomNavMain>{
   List<MainItem> mainItems = <MainItem>[
     new MainItem(title: '视频',icon: Icons.directions_car,widget:new InfiniteWordList()),
     new MainItem(title: '消息', icon: Icons.directions_bike,widget:new RefreshWordList()),
-    new MainItem(title: '工单', icon: Icons.directions_boat,widget:new ContainerDemo()),
+    new MainItem(title: '工单', icon: Icons.directions_boat,widget:new RefreshScrollWordList()),
     new MainItem(title: '直播', icon: Icons.directions_bus,widget:new ContainerDemo()),
     new MainItem(title: '个人中心', icon: Icons.directions_railway,widget:new ContainerDemo()),
   ];
@@ -49,7 +50,7 @@ class _BottomNavMainState extends State<BottomNavMain>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return new Scaffold(
-      appBar: new AppBar(title: new Text("bottom navigation"),),
+      appBar: new AppBar(title: new Text('${mainItems[_currentIndex].title}')),
       body: IndexedStack(
         index: _currentIndex,
         children: _navTabViews,
