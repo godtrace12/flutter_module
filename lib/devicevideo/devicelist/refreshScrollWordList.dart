@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'adapter/devListAdapter.dart';
+import 'adapter/devStateListAdapter.dart';
 
 //下拉刷新，上拉加载更多列表
 class RefreshScrollWordList extends StatefulWidget{
@@ -68,7 +69,7 @@ class RefreshScrollwordListState extends State<RefreshScrollWordList>{
             }
           }
           // 显示设备列表适配器
-          return DevListAdapter(_words[index]);
+          return DevStateListAdapter(_words[index]);
         },
 //            长度为实际数据长度加1，这个1用来显示上拉加载中或没有更多
         itemCount: _words.length+1),
