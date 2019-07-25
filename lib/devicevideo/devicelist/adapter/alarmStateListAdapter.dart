@@ -9,15 +9,19 @@ class AlarmStateListAdapter extends StatelessWidget{
   Widget build(BuildContext context) {
     // TODO: implement build
     return new Container(
-      padding: EdgeInsets.all(20),
-//      decoration: BoxDecoration(
-//        borderRadius: BorderRadius.circular(2.0),
-//        boxShadow: [BoxShadow(
-//          color: Colors.black54,
-//          offset: Offset(1.0, 1.0),
-//          blurRadius: 1.0
-//        )]
-//      ),
+      margin: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(3, 54, 255, 1.0),
+        border: Border.all(
+          color: Colors.grey
+        ),
+        borderRadius: BorderRadius.circular(2.0),
+        boxShadow: [BoxShadow(
+          color: Colors.black54,
+          offset: Offset(3.0, 3.0),
+          blurRadius: 1.0,
+        )]
+      ),
 //      width: 200.0,
 
       child: Column(
@@ -41,17 +45,20 @@ class TitleArea extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return new Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        new Text(_canName),
-        new Expanded(
-          flex: 1,
-          child: new Text(""),
-        ),
-        new Icon(Icons.keyboard_arrow_right)
-      ],
+    return new Container(
+      color: Colors.white,
+      padding: EdgeInsets.only(left: 6.0,top: 6.0,bottom: 6.0,right: 4.0),
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          new Text(_canName,style: TextStyle(fontSize: 12),),
+          new Expanded(
+            flex: 1,
+            child: new Text(""),
+          ),
+          new Icon(Icons.keyboard_arrow_right)
+        ],
+      ),
     );
   }
 }
@@ -74,7 +81,7 @@ class _DevCoverAreaState extends State<DevCoverArea>{
     return new ConstrainedBox(
       constraints: BoxConstraints(
           minWidth: double.infinity,
-          minHeight: 150.0
+          minHeight: 160.0
       ),
       child: new Stack(
         alignment: AlignmentDirectional.topEnd,
@@ -88,7 +95,7 @@ class _DevCoverAreaState extends State<DevCoverArea>{
           new Positioned(top: 16.0,right:6.0,child: new Icon(Icons.accessibility))
 //        new Icon(Icons.accessibility)
         ],
-      ),);;
+      ),);
   }
 
   void _handleDevCoverTap(){
