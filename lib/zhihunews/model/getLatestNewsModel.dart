@@ -13,7 +13,12 @@ Map<String,dynamic> optHeader = {
 class GetLatestNewsModel {
 
   Future<BaseRspModel<LatestNewsModel>> getLatestNews(String date) async{
-    String url = ZhihuNetConstant.baseUrl+ZhihuNetConstant.latest;
+    String url;
+    if(null == date){
+      url = ZhihuNetConstant.baseUrl + ZhihuNetConstant.latest;
+    }else{
+      url = ZhihuNetConstant.baseUrl + ZhihuNetConstant.before + date;
+    }
     Dio dio = new Dio(BaseOptions(connectTimeout: 30000,headers: optHeader));
     LatestNewsModel latestNews;
     List stories = null;
@@ -32,9 +37,12 @@ class GetLatestNewsModel {
         List<StoryModel> storiesList = stories.map((model){
           return StoryModel.fromJson(model);
         }).toList();
-        List<TopStoryModel> topStoriesList = topStories.map((model){
-          return new TopStoryModel.fromJson(model);
-        }).toList();
+        List<TopStoryModel> topStoriesList;
+        if(topStories != null && topStories.isNotEmpty){
+          topStoriesList = topStories.map((model){
+            return new TopStoryModel.fromJson(model);
+          }).toList();
+        }
         latestNews = new LatestNewsModel(date, storiesList, topStoriesList);
       }else{
         errorMsg = '后台服务异常';

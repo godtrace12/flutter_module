@@ -7,6 +7,7 @@ import 'package:flutter_module/zhihunews/model/getLatestNewsModel.dart';
 import 'package:flutter_module/util/dateUtil.dart';
 import 'package:flutter_module/zhihunews/bean/latestNewsModel.dart';
 import 'package:flutter_module/zhihunews/bean/baseRspModel.dart';
+import 'adapter/zhihuNewsListAdapter.dart';
 
 //下拉刷新，上拉加载更多列表
 class RefreshZhihuNewsList extends StatefulWidget{
@@ -25,21 +26,25 @@ class RefreshZhihuNewsListState extends State<RefreshZhihuNewsList>{
   bool isFirstTime = true;
   GetLatestNewsModel _getLatestNewsModel = new GetLatestNewsModel();
   LatestNewsModel _latestNewsModel;
+  //消息列表
+  List<StoryModel> _storyList = new List();
+  DateTime _curDateTime = null;
 
   @override
   void initState(){
     super.initState();
     print("dj refresh initState");
     if(isFirstTime){
-      _retrieveData();
+//      _retrieveData();
+//      _retrieveZhihuNews();
       _retrieveZhihuNews();
     }
     //列表滑动到末尾，并且长度还不足15时去加载更多
     _scrollController.addListener((){
       if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent
-        && _words.length <15){
+        && _storyList.length <10){
         print("滑动到了底部，准备加载更多");
-        _retrieveData();
+        _retrieveZhihuNews();
       }
     });
   }
@@ -58,8 +63,8 @@ class RefreshZhihuNewsListState extends State<RefreshZhihuNewsList>{
             controller: _scrollController,
             itemBuilder: (context,index){
 //          //表尾
-          if(index == _words.length) {
-            if(_words.length <15){
+          if(index == _storyList.length) {
+            if(_storyList.length <10){
               // 不足100，继续获取数据
               //加载显示loading
               return Container(
@@ -77,15 +82,11 @@ class RefreshZhihuNewsListState extends State<RefreshZhihuNewsList>{
             }
           }
           // 显示设备列表适配器
-          if(_words[index].contains('5')){
-            return AlarmStateListAdapter(_words[index]);
-          }else{
-            return DevStateListAdapter(_words[index]);
-          }
+          return ZhihuNewsListAdapter(_storyList[index]);
         },
 //            长度为实际数据长度加1，这个1用来显示上拉加载中或没有更多
-        itemCount: _words.length+1),
-        onRefresh: _onRrefresh);
+        itemCount: _storyList.length+1),
+        onRefresh: _onRreshZhihuNews);
   }
 
 
@@ -113,14 +114,39 @@ class RefreshZhihuNewsListState extends State<RefreshZhihuNewsList>{
     });
   }
 
-  void _retrieveZhihuNews() async{
-    print("dj开始加载知乎消息！");
-    DateTime curDateTime = new DateTime.now();
-    String curDateStr = DateUtil.formatDateSimple(curDateTime);
+  Future<Null> _onRreshZhihuNews() async{
+    print("_onRreshZhihuNews 开始刷新知乎消息！");
+    _curDateTime = new DateTime.now();
+    String curDateStr = DateUtil.formatDateSimple(_curDateTime);
     BaseRspModel<LatestNewsModel> baseRspModel = await _getLatestNewsModel.getLatestNews(curDateStr);  //拿到future的值
     print("dj 加载完成知乎消息");
     _latestNewsModel = baseRspModel.data;
+    _storyList.clear();
+    _storyList.addAll(_latestNewsModel.stories); //增加所有story列表
     print(_latestNewsModel.stories[0].title);
+    print('storty length=${_latestNewsModel.stories.length}');
+    setState(() {
+
+    });
+  }
+
+  void _retrieveZhihuNews() async{
+    print("_retrieveZhihuNews 开始加载知乎消息！");
+    if(_curDateTime == null){
+      _curDateTime = new DateTime.now();
+      print("使用的当前时间");
+    }else{
+      _curDateTime = _curDateTime.add(new Duration(days: -1));
+      print('使用减去后的时间');
+    }
+    String curDateStr = DateUtil.formatDateSimple(_curDateTime);
+    print('获取时间---'+curDateStr);
+    BaseRspModel<LatestNewsModel> baseRspModel = await _getLatestNewsModel.getLatestNews(curDateStr);  //拿到future的值
+    print("dj 加载完成知乎消息");
+    _latestNewsModel = baseRspModel.data;
+    _storyList.addAll(_latestNewsModel.stories);
+    print(_latestNewsModel.stories[0].title);
+//    print(_latestNewsModel.topStories[0].title);
     print('storty length=${_latestNewsModel.stories.length}');
     setState(() {
 
