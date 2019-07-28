@@ -23,7 +23,7 @@ class ContainerDemo extends StatelessWidget {
               ),
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
             ),
-            child: Image.asset('assets/images/pic1.jpg'),
+            child: Image.asset('assets/images/pic_hzw.jpeg'),
           ),
           Container(
             alignment: Alignment.center,

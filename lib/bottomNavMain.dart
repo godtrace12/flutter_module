@@ -4,6 +4,7 @@ import 'devicevideo/devicelist/container.dart';
 import 'devicevideo/devicelist/noSeparateWordList.dart';
 import 'devicevideo/devicelist/refreshWordList.dart';
 import 'devicevideo/devicelist/refreshScrollWordList.dart';
+import 'devicevideo/devicelist/refreshZhihuNewsList.dart';
 
 class BottomNavMain extends StatefulWidget{
   @override
@@ -28,7 +29,7 @@ class _BottomNavMainState extends State<BottomNavMain>{
     new MainItem(title: '视频',icon: Icons.directions_car,widget:new InfiniteWordList()),
     new MainItem(title: '消息', icon: Icons.directions_bike,widget:new RefreshWordList()),
     new MainItem(title: '工单', icon: Icons.directions_boat,widget:new RefreshScrollWordList()),
-    new MainItem(title: '直播', icon: Icons.directions_bus,widget:new ContainerDemo()),
+    new MainItem(title: '直播', icon: Icons.directions_bus,widget:new RefreshZhihuNewsList()),
     new MainItem(title: '个人中心', icon: Icons.directions_railway,widget:new ContainerDemo()),
   ];
 
