@@ -4,6 +4,7 @@ import 'package:flutter_module/zhihunews/net/zhihuNetConstant.dart';
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'dart:io';
+import 'package:flutter_module/zhihunews/bean/latestNewsSerialWholeModel.dart';
 
 Map<String,dynamic> optHeader = {
   'accept-language':'zh-cn',
@@ -56,4 +57,36 @@ class GetLatestNewsModel {
     }
     return rspModel;
   }
+
+  Future<BaseRspModel<LatestNewsSerialWholeModel>> getLatestNewsWholeSerial(String date) async{
+    String url;
+    if(null == date){
+      url = ZhihuNetConstant.baseUrl + ZhihuNetConstant.latest;
+    }else{
+      url = ZhihuNetConstant.baseUrl + ZhihuNetConstant.before + date;
+    }
+    Dio dio = new Dio(BaseOptions(connectTimeout: 30000,headers: optHeader));
+    LatestNewsSerialWholeModel latestNews;
+    int code;
+    String errorMsg;
+    BaseRspModel<LatestNewsSerialWholeModel> rspModel;
+    try{
+      Response response =await dio.get(url);
+      print(response.data);
+      if(response.statusCode == HttpStatus.OK){
+        code = 200;
+        latestNews = LatestNewsSerialWholeModel.fromJson(response.data);
+      }else{
+        errorMsg = '后台服务异常';
+      }
+    }catch(exception){
+      print("网络异常");
+      errorMsg ="网络出现异常";
+    }finally{
+      print("finally 啦");
+      rspModel =new BaseRspModel(code, errorMsg, latestNews);
+    }
+    return rspModel;
+  }
+
 }

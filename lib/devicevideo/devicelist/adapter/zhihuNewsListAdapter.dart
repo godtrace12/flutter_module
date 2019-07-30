@@ -80,14 +80,11 @@ class _DevCoverAreaState extends State<DevCoverArea>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return new ConstrainedBox(
-      constraints: BoxConstraints(
-          minWidth: double.infinity,
-          minHeight: 160.0
-      ),
+    return new Container(
+      height: 160.0,
       child: new Stack(
         alignment: AlignmentDirectional.topEnd,
-        fit: StackFit.loose,
+        fit: StackFit.expand,
         textDirection: TextDirection.ltr,
         children: <Widget>[
           new GestureDetector(
@@ -95,7 +92,7 @@ class _DevCoverAreaState extends State<DevCoverArea>{
             child: new FadeInImage.assetNetwork(
                 placeholder: 'assets/images/pic_hzw.jpeg',
                 image: this.widget._storyModel.images[0],
-                fit: BoxFit.fitWidth,
+                fit: BoxFit.fill,
             ),
             onTap: _handleDevCoverTap,
           ),

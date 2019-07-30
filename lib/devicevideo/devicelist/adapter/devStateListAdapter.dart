@@ -76,18 +76,16 @@ class _DevCoverAreaState extends State<DevCoverArea>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return new ConstrainedBox(
-      constraints: BoxConstraints(
-          minWidth: double.infinity,
-          minHeight: 160.0
-      ),
+    return new Container(
+      height: 160.0,
+      color: Colors.amber,
       child: new Stack(
         alignment: AlignmentDirectional.topEnd,
-        fit: StackFit.loose,
+        fit: StackFit.expand,
         textDirection: TextDirection.ltr,
         children: <Widget>[
           new GestureDetector(
-            child: new Image(image: new AssetImage('assets/images/pic_hzw.jpeg'),),
+            child: new Image(image: new AssetImage('assets/images/main_alarm.png'),fit: BoxFit.fitHeight,),
             onTap: _handleDevCoverTap,
           ),
           new Positioned(top: 16.0,right:6.0,child: new Icon(Icons.accessibility))

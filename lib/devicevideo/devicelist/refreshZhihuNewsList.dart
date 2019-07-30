@@ -8,6 +8,7 @@ import 'package:flutter_module/util/dateUtil.dart';
 import 'package:flutter_module/zhihunews/bean/latestNewsModel.dart';
 import 'package:flutter_module/zhihunews/bean/baseRspModel.dart';
 import 'adapter/zhihuNewsListAdapter.dart';
+import 'package:flutter_module/zhihunews/bean/latestNewsSerialWholeModel.dart';
 
 //下拉刷新，上拉加载更多列表
 class RefreshZhihuNewsList extends StatefulWidget{
@@ -38,6 +39,7 @@ class RefreshZhihuNewsListState extends State<RefreshZhihuNewsList>{
 //      _retrieveData();
 //      _retrieveZhihuNews();
       _retrieveZhihuNews();
+      _retrieveZhihuNewsWholeSerial();//获取自动json序列化的信息
     }
     //列表滑动到末尾，并且长度还不足15时去加载更多
     _scrollController.addListener((){
@@ -148,6 +150,27 @@ class RefreshZhihuNewsListState extends State<RefreshZhihuNewsList>{
     print(_latestNewsModel.stories[0].title);
 //    print(_latestNewsModel.topStories[0].title);
     print('storty length=${_latestNewsModel.stories.length}');
+    setState(() {
+
+    });
+  }
+
+  void _retrieveZhihuNewsWholeSerial() async{
+    print("_retrieveZhihuNewsWholeSerial 开始加载知乎消息！");
+    if(_curDateTime == null){
+      _curDateTime = new DateTime.now();
+      print("使用的当前时间");
+    }else{
+      _curDateTime = _curDateTime.add(new Duration(days: -1));
+      print('使用减去后的时间');
+    }
+    String curDateStr = DateUtil.formatDateSimple(_curDateTime);
+    print('获取时间---'+curDateStr);
+    BaseRspModel<LatestNewsSerialWholeModel> baseRspModel = await _getLatestNewsModel.getLatestNewsWholeSerial(curDateStr);  //拿到future的值
+    print("dj 加载完成知乎消息");
+    LatestNewsSerialWholeModel latestNewsSerialWholeModel = baseRspModel.data;
+    print(latestNewsSerialWholeModel.stories[0].title);
+    print('storty length=${latestNewsSerialWholeModel.stories.length}');
     setState(() {
 
     });
