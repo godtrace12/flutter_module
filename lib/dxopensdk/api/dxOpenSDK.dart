@@ -7,6 +7,7 @@ import 'package:flutter_module/dxopensdk/constant/appConstant.dart';
 import 'package:flutter_module/dxopensdk/constant/dx_HttpConstants.dart';
 import 'package:flutter_module/dxopensdk/responsemodel/dx_base_rsp.dart';
 import 'package:flutter_module/dxopensdk/responsemodel/dx_login_rsp.dart';
+import 'package:flutter_module/dxopensdk/model/user_info.dart';
 
 import 'dart:convert';
 
@@ -19,6 +20,7 @@ class DXOpenSDK{
   static const String CHANNEL_DECODE = "com.hikvision.viop.hybrid.flutter/decode";
   static const platform = const MethodChannel(CHANNEL_DECODE);
   static const String METHOD_DECODE = "method_decode";
+  String _sessionId;
   static DXOpenSDK _instance;
   static Dio dio;
   DXOpenSDK._(){
@@ -68,6 +70,10 @@ class DXOpenSDK{
 
     }finally{
       rspModel = new DX_BaseRspModel(status, description, dataRsp);
+      //保存用户信息
+      UserInfo.getInstance().loginInfo = dataRsp.loginInfo;
+      UserInfo.getInstance().accountInfo = dataRsp.userInfo;
+      _sessionId = dataRsp.loginInfo.sessionId;//保存session
     }
     return rspModel;
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'tabMain.dart';
 import 'devicevideo/devicelist/infiniteWordList.dart';
 import 'bottomNavMain.dart';
+import 'login/widget/login_widget.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
       routes: <String,WidgetBuilder>{'tabMain':(_)=>TabMain(),
-      "infiniteWordList":((_)=>InfiniteWordList()),'bottomNavMain':((_)=>BottomNavMain())},
+      "infiniteWordList":((_)=>InfiniteWordList()),'bottomNavMain':((_)=>BottomNavMain()),
+      'loginWidget':((_)=>LoginWidget())},
     );
   }
 }
@@ -106,6 +108,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.of(context).pushNamed("bottomNavMain");
               },
               child: new Text("bottomNav"),
+              color: Colors.blue,
+            ),
+            RaisedButton(
+              onPressed: (){
+                Navigator.of(context).pushNamed("loginWidget");
+              },
+              child: new Text("接口测试"),
               color: Colors.blue,
             ),
 
