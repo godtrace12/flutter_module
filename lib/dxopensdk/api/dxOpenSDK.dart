@@ -8,6 +8,7 @@ import 'package:flutter_module/dxopensdk/constant/dx_HttpConstants.dart';
 import 'package:flutter_module/dxopensdk/responsemodel/dx_base_rsp.dart';
 import 'package:flutter_module/dxopensdk/responsemodel/dx_login_rsp.dart';
 import 'package:flutter_module/dxopensdk/model/user_info.dart';
+import 'package:flutter_module/dxopensdk/responsemodel/dx_camera_list_rsp.dart';
 
 import 'dart:convert';
 
@@ -74,6 +75,49 @@ class DXOpenSDK{
       UserInfo.getInstance().loginInfo = dataRsp.loginInfo;
       UserInfo.getInstance().accountInfo = dataRsp.userInfo;
       _sessionId = dataRsp.loginInfo.sessionId;//保存session
+    }
+    return rspModel;
+  }
+
+  Future<DX_BaseRspModel<DX_CameraListRspModel>> getCameraList([String currId,String cameraName, int pageSize = 20, String mode]) async{
+    Map<String, dynamic> queryParam = new Map();
+    queryParam[DX_HttpConstants.DX_REQ_KEY_CLIENT_TYPE] = DX_HttpConstants.DX_REQ_VALUE_CLIENT_TYPE;
+    queryParam[DX_HttpConstants.DX_REQ_KEY_VERSION] = DX_HttpConstants.DX_REQ_VALUE_VERSION;
+    queryParam[DX_HttpConstants.DX_REQ_KEY_SESSION_ID] = UserInfo.getInstance().loginInfo.sessionId;
+    if(currId != null && currId.isNotEmpty) {
+      queryParam[DX_HttpConstants.DX_REQ_KEY_CURRENT_ID] = currId;
+    }
+    if(cameraName != null && cameraName.isNotEmpty) {
+      queryParam[DX_HttpConstants.DX_REQ_KEY_CAMERA_NAME] = cameraName;
+    }
+    queryParam[DX_HttpConstants.DX_REQ_KEY_PAGE_SIZE] = pageSize;
+    if(mode != null && mode.isNotEmpty){
+      queryParam[DX_HttpConstants.DX_REQ_KEY_CAMERA_MODE] = mode;
+    }
+    //原始请求返回
+    DX_BaseRspModel<DX_CameraListRspModel> rspModel;
+    int status;
+    String description;
+    DX_CameraListRspModel dataRsp;
+    //异常里应该再加个捕获平台通道解码的异常
+    try{
+      Response oriResponse = await dio.get(DX_UrlConstants.DX_GET_CAMERA_LIST,queryParameters:queryParam);
+      String decodeRsp = await getDecodeResponse(oriResponse.data);
+      print('flutter得到解密后：${decodeRsp}');
+      Map<String,dynamic> rspJsonMap = json.decode(decodeRsp);
+      status = int.parse(rspJsonMap[DX_BaseRspModel.STATUS] as String);
+      description = rspJsonMap[DX_BaseRspModel.DESCRIPTION];
+      dataRsp = DX_CameraListRspModel.fromJson(rspJsonMap[DX_BaseRspModel.PARAMS] as Map<String,dynamic>);
+    } on DioError catch(e){
+      status = e.error;
+      description = e.message;
+      print('request:${e.request.data}');
+    } on PlatformException catch(ep){
+      description = "net 通过原生解密失败 errorMsg:'${ep.message}'";
+    } catch (e){
+
+    }finally{
+      rspModel = new DX_BaseRspModel(status, description, dataRsp);
     }
     return rspModel;
   }

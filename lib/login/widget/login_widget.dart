@@ -3,6 +3,7 @@ import 'package:flutter_module/dxopensdk/api/dxOpenSDK.dart';
 import 'package:flutter_module/dxopensdk/responsemodel/dx_base_rsp.dart';
 import 'package:flutter_module/dxopensdk/responsemodel/dx_login_rsp.dart';
 import 'package:flutter_module/dxopensdk/model/user_info.dart';
+import 'package:flutter_module/dxopensdk/responsemodel/dx_camera_list_rsp.dart';
 
 
 class LoginWidget extends StatelessWidget{
@@ -22,7 +23,7 @@ class LoginWidget extends StatelessWidget{
             RaisedButton(
                 child: new Text('camera list'),
                 color: Colors.blue,
-                onPressed: null)
+                onPressed: _onGetCamListTapped)
           ],
         ),
       ),
@@ -36,8 +37,10 @@ class LoginWidget extends StatelessWidget{
     print("sessionId=${UserInfo.getInstance().loginInfo.sessionId}");
   }
 
-  void _onGetCamListTapped(){
-
+  void _onGetCamListTapped() async{
+    DXOpenSDK dxOpenSDK = DXOpenSDK.getInstance();
+    DX_BaseRspModel<DX_CameraListRspModel> rspModel =await dxOpenSDK.getCameraList();
+    print("获取到的监控点:${rspModel.params.cameraList[0].cameraName}");
   }
 
 }

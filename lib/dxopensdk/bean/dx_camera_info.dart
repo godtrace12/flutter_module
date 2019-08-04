@@ -1,5 +1,7 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'dx_camera_privilege.dart';
-
+part 'dx_camera_info.g.dart';
+@JsonSerializable()
 class DX_CameraInfo{
   // 撤防
   static final int DEFENCE_NO = 0;
@@ -84,7 +86,7 @@ class DX_CameraInfo{
   // 加密状态（0-不加密，1-加密）
   int isEncrypt;
 
-  // 在线状态（0-不在线，1-在线）
+ // 在线状态（0-不在线，1-在线）
   int onlineStatus;
 
   // 监控点名称
@@ -140,4 +142,14 @@ class DX_CameraInfo{
 
   // 提醒声音类型
   int alarmSoundMode;
+
+  DX_CameraInfo(this.defence, this.isEncrypt, this.onlineStatus,
+      this.cameraName, this.ysCameraId, this.chanNum, this.cameraId,
+      this.picUrl, this.groupId, this.deviceSerial, this.videoLevel,
+      this.status, this.isShared, this.fromFriend, this.privilege, this.model,
+      this.isTrust, this.expireTime, this.flowstatus, this.ispassenger,
+      this.alarmSoundMode);
+
+  factory DX_CameraInfo.fromJson(Map<String, dynamic> json) => _$DX_CameraInfoFromJson(json);
+  Map<String, dynamic> toJson() => _$DX_CameraInfoToJson(this);
 }

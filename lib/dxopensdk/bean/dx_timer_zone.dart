@@ -1,3 +1,6 @@
+import 'package:json_annotation/json_annotation.dart';
+part 'dx_timer_zone.g.dart';
+@JsonSerializable()
 
 class DX_TimerZone {
   //起始时间，如00:00
@@ -8,4 +11,6 @@ class DX_TimerZone {
 
   DX_TimerZone(this.timerStart, this.timerEnd);
 
+  factory DX_TimerZone.fromJson(Map<String, dynamic> json) => _$DX_TimerZoneFromJson(json);
+  Map<String, dynamic> toJson() => _$DX_TimerZoneToJson(this);
 }
